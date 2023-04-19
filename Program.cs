@@ -8,6 +8,69 @@
 // 9 5 3 2
 // 8 4 4 2
 
+Console.Write("Введите количество строк в массиве: m = ");
+int row = int.Parse(Console.ReadLine()!);
+
+Console.Write("Введите количество столбцов в массиве: n = ");
+int column = int.Parse(Console.ReadLine()!);
+
+int[,] array = GetArray(row, column, 0, 10);
+PrintArray(array);
+
+Console.WriteLine();
+PrintArray(GetSortedArray(array));
+
+//--------Заполнение двумерного массива-------------
+int[,] GetArray(int m, int n, int minValue, int maxValue)
+{
+    int[,] result = new int[m, n];
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            result[i, j] = new Random().Next(minValue, maxValue);
+        }
+    }
+    return result;
+}
+
+
+//----------------Получение нового массива-----------
+int[,] GetSortedArray(int[,] array)
+{
+
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        int temp = array[i, 0];
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            for (int next = j + 1; next < array.GetLength(1); next++)
+            {
+                if (array[i, next] > array[i, j])
+                {
+                    temp = array[i, j];
+                    array[i, j] = array[i, next];
+                    array[i, next] = temp;
+                }
+            }
+        }
+    }
+    return array;
+}
+
+// --------------------Вывод массива--------------
+void PrintArray(int[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            Console.Write($"{array[i, j]} ");
+        }
+        Console.WriteLine(" ");
+    }
+}
+
 // Задача 57: Составить частотный словарь элементов двумерного массива. 
 // Частотный словарь содержит информацию о том, сколько раз встречается элемент входных данных.
 
